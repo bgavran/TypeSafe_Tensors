@@ -72,15 +72,15 @@ namespace NestedTensorStuff
 
   -- More general version than above
   public export
-  toNestedTensor' : {sh1 : Vect n Nat} -> {sh2 : Vect m Nat}
+  toNestedTensor : {sh1 : Vect n Nat} -> {sh2 : Vect m Nat}
     -> Tensor (sh1 ++ sh2) a -> Tensor sh1 (Tensor sh2 a)
-  toNestedTensor' {sh1 = []} {sh2} t = TZ t
-  toNestedTensor' {sh1 = (_ :: _)} {sh2} (TS xs) = TS $ toNestedTensor' <$> xs
+  toNestedTensor {sh1 = []} {sh2} t = TZ t
+  toNestedTensor {sh1 = (_ :: _)} {sh2} (TS xs) = TS $ toNestedTensor <$> xs
 
   public export
-  fromNestedTensor' : Tensor sh1 (Tensor sh2 a) -> Tensor (sh1 ++ sh2) a
-  fromNestedTensor' (TZ tv) = tv
-  fromNestedTensor' (TS xts) = TS $ map fromNestedTensor' xts
+  fromNestedTensor : Tensor sh1 (Tensor sh2 a) -> Tensor (sh1 ++ sh2) a
+  fromNestedTensor (TZ tv) = tv
+  fromNestedTensor (TS xts) = TS $ map fromNestedTensor xts
 
 
 
@@ -96,7 +96,7 @@ public export
 Matrix : (rows, cols : Nat) -> (dtype : Type) -> Type
 Matrix rows cols dtype = Tensor [rows, cols] dtype
 
-namespace ApplicativeT
+namespace ApplicativeTensorA
   -- unit of a monoidal functor
   public export
   tensorReplicate : {shape : Vect n Nat} -> a -> Tensor shape a
@@ -116,7 +116,7 @@ namespace ApplicativeT
     pure x = tensorReplicate x
     fs <*> xs = uncurry ($) <$> liftA2Tensor fs xs 
 
-namespace NumericT
+namespace NumericTensorA
   -- Pointwise Num structure
   public export
   {shape : Vect n Nat} -> Num a => Num (Tensor shape a) where

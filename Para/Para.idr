@@ -10,12 +10,28 @@ record Para (a : Type) (b : Type) where
     Param : a -> Type
     Run : (x : a) -> Param x -> b
 
+-- TODO infix notation
 
 public export
 composePara : Para a b -> Para b c -> Para a c
 composePara (MkPara p f) (MkPara q g) = MkPara
   (\x => (p' : p x ** q (f x p')))
   (\x, (p' ** q') => g (f x p') q')
+
+-- mapRunPara : {a : Type} -> {b : Type} ->
+--   (model : Para a b) -> Vect n a -> Vect n b
+public export
+depMap : {t : a -> Type} -> (f : (x : a) -> t x) ->
+  Vect n a -> Vect n (x : a ** t x)
+depMap f [] = []
+depMap f (x :: xs) = (x ** f x) :: depMap f xs
+
+public export infixr 10 <$^>
+public export
+(<$^>) : {t : a -> Type} -> (f : (x : a) -> t x) ->
+  Vect n a -> Vect n (x : a ** t x)
+(<$^>) f xs = depMap f xs
+
 
 -- composePara_rhs_1 : (p : Vect n Type) -> (q : Vect m Type)
 --   -> (a -> All Prelude.id p -> b)

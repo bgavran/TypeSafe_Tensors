@@ -1,24 +1,22 @@
-# Type-safe Tensors & Network architectures
+module Examples.Tensors
 
-This is framework for pure functional tensor processing, implemented in Idris 2. It
-* Is **type-safe**: tensor indexing and contractions fail at compile time if types do not match
-* **implements non-cubical tensors**: tensors of trees and streams instead of just arrays are supported
-* **is made with ergonomics in mind**: it aims to provide the standard numpy/Pytorch interface to the user in a purely functional language with first-class types
+import Data.Tensor
+import Data.Tensor.Utils
+-- import Data.Tensor.NaperianTensor
 
+{-
+Need to compute stride-based functionality for:
+ * Slice
+ * Take
+ * Transpose
 
-It is expressive enough to [implement generalised cross-attention](https://github.com/bgavran/TypeSafe_Tensors/blob/main/Architectures/Attention.idr#L19) as described in [Generalised Transformers using Applicative Functors](https://glaive-research.org/2025/02/11/Generalized-Transformers-from-Applicative-Functors.html).
+Need to fix automatic flattening for TensorA for contraction operations
+ -}
 
-It is aiming to achieve performance not at the expense of compositionality, but rather because of it, meaning special care is taken to develop typed tensor abstractions that can later be made performant. It's in active development and with many rough edges.
+----------------------------------------
+-- Examples of standard, cubical tensors
+----------------------------------------
 
-* [Examples](#Examples)
-* [Technical details](#Technical-details)
-* [Planned features](#Planned-features)
-
-# Examples
-
-These examples are taken from `Examples.Tensors.idr`.
-
-```idris
 ||| We can construct Tensors directly
 t0 : Tensor [3, 4] Double
 t0 = fromArray [ [0, 1, 2, 3]
@@ -186,19 +184,3 @@ failing
   -}
   indexTreeExampleFail : Double
   indexTreeExampleFail = ex1 @@ [GoRLeaf (GoRLeaf AtLeaf)]
-```
-
-# Technical details
-
-The core components of this libary are containers, applicative functors and dependent lenses
-* Containers allow us to talk about shapely types, and allow us to define a generalised indexing operation for vectors, trees, and other non-cubical shapes
-* Applicative functors allow us to perform generalised linear algebra
-* Dependent lenses allow us to talk about morphisms of containers, and define tensor reshaping operations
-
-
-# Planned features
-* Type-safe einsum
-* Type-safe broadcasting and stacking for both cubical and applicative tensors
-* In-place operations/views, including as_strided variants for non-cubical tensors
-* FFI to a low-level kernel for tensor operations
-* No investigation has been done regarding optimisation yet

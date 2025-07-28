@@ -25,11 +25,11 @@ public export
 -- public export
 -- [appSum] {shape : Vect n Nat} -> 
 -- Num a => Applicative f =>
--- Algebra (Tensor shape) (f a) using applicativeNum where
+-- Algebra (TensorA shape) (f a) using applicativeNum where
 --   reduce (TZ val) = val
 --   reduce (TS xs) = reduce (reduce <$> xs)
 -- 
--- aa : Algebra (Tensor [2]) (Tensor [3] a) => a
+-- aa : Algebra (TensorA [2]) (TensorA [3] a) => a
 -- aa = ?aa_rhs
 
 ||| Just summing up elements of the tree given by the Num a structure

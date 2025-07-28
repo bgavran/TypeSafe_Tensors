@@ -1,0 +1,67 @@
+package typesafe-tensors
+-- version =
+authors = "Bruno Gavranovic"
+-- maintainers =
+-- license =
+-- brief =
+-- readme =
+-- homepage =
+-- sourceloc =
+-- bugtracker =
+
+-- the Idris2 version required (e.g. langversion >= 0.5.1)
+-- langversion
+
+-- packages to add to search path
+depends = contrib, hashmap, elab-util
+
+-- modules to install
+modules = Data.Container.Definition,
+          Data.Container.Morphism,
+          Data.Container.Instances,
+          Data.Container.Applicative,
+          Data.Container.TreeUtils,
+          Data.Tensor,
+          Data.Tensor.NaperianTensor,
+          Data.Tensor.Utils,
+          Data.Functor.Naperian,
+          Data.Tree,
+          Data.Tensor.Einsum.EinsumExpr,
+          Data.Tensor.Einsum.EinsumElab,
+          Data.Tensor.Einsum.EinsumElabUtils,
+          Architectures.Activations,
+          Architectures.Attention,
+          Architectures.Softmax,
+          Architectures.Linear,
+          Algebra,
+          Misc,
+          Data.ElabUtilTest,
+          Examples.Tensors
+
+-- main file (i.e. file to load at REPL)
+-- main =
+
+-- name of executable
+-- executable =
+-- opts =
+-- sourcedir =
+-- builddir =
+-- outputdir =
+
+-- script to run before building
+-- prebuild =
+
+-- script to run after building
+-- postbuild =
+
+-- script to run after building, before installing
+-- preinstall =
+
+-- script to run after installing
+-- postinstall =
+
+-- script to run before cleaning
+-- preclean =
+
+-- script to run after cleaning
+-- postclean =

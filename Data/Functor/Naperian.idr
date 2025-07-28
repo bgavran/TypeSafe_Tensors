@@ -51,12 +51,12 @@ public export
 vectPositionsEx : Vect 3 (Fin 3)
 vectPositionsEx = positions
 
--- reshapeTensorNap : {shape : Vect n Nat} -> {newShape : Vect m Nat}
---   -> Tensor shape a
+-- reshapeTensorANap : {shape : Vect n Nat} -> {newShape : Vect m Nat}
+--   -> TensorA shape a
 --   -> (newShape : Vect n Nat)
 --   -> {auto prf : prod shape = prod newShape}
---   -> Tensor newShape a
--- reshapeTensorNap t newShape = let tR = lookup t in tabulate ?aa
+--   -> TensorA newShape a
+-- reshapeTensorANap t newShape = let tR = lookup t in tabulate ?aa
 -- 
 -- reshapeIndex : {shape : Vect n Nat} -> {newShape : Vect m Nat}
 --   -> {auto prf : prod shape = prod newShape}
@@ -75,7 +75,7 @@ vectPositionsEx = positions
 --   -> IndexT [6]
 -- reshapeIndex' (i :: j :: Nil) = ?yuu :: Nil
 
--- tensorPositionsEx : Tensor [3, 3, 3] (IndexT [3, 3, 3])
+-- tensorPositionsEx : TensorA [3, 3, 3] (IndexT [3, 3, 3])
 -- tensorPositionsEx = positions
 
   -- not sure how to represent Pair, it's curried?

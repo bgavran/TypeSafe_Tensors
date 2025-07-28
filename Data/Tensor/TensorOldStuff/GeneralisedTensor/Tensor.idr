@@ -33,7 +33,7 @@ data Tensor : (shape : Vect n ApplF)
 
 %name Tensor t, u, v
 
-namespace EqT
+namespace EqTensorA
   public export
   data AllEq : (shape : Vect n ApplF) -> (dtype : Type) -> Type where
     NilEq : Eq a => AllEq [] a
@@ -48,7 +48,7 @@ namespace EqT
   (allEq : AllEq shape a) => Eq (Tensor shape a) where
     (==) = genTensorEq
 
-namespace ShowT
+namespace ShowTensorA
   public export
   data AllShow : (shape : Vect n ApplF) -> (dtype : Type) -> Type where
     NilShow : Show a => AllShow [] a
@@ -70,7 +70,7 @@ namespace FunctorT
     map f (GTS xs) = GTS $ (map f) <$> xs
 
 
-namespace ApplicativeT
+namespace ApplicativeTensorA
   ||| Unit of a monoidal functor
   public export
   tensorReplicate : {shape : Vect n ApplF} -> a -> Tensor shape a
@@ -91,7 +91,7 @@ namespace ApplicativeT
 
 
 
-namespace NumericT
+namespace NumericTensorA
   public export
   {shape : Vect n ApplF} -> Num a => Num (Tensor shape a) where
     fromInteger i = tensorReplicate (fromInteger i)
@@ -111,7 +111,7 @@ namespace NumericT
 
 
 
-namespace AlgebraT
+namespace AlgebraTensorA
   public export
   data AllAlgebra : (shape : Vect n ApplF) -> (dtype : Type) -> Type where
     NilAlgebra : AllAlgebra [] a
@@ -129,7 +129,7 @@ namespace AlgebraT
     reduce = reduceTensor
 
 
-namespace FoldableT
+namespace FoldableTensorA
 
   public export
   data AllFoldable : (shape : Vect n ApplF) -> (dtype : Type) -> Type where
@@ -163,8 +163,8 @@ dot xs ys = GTZ $ reduce $ (\(x, y) => x ~*~ y) <$> liftA2Tensor xs ys
 
 ||| This recovers usual tensors in Tensor.Tensor
 public export
-Tensor' : (shape : Vect n Nat) -> Type -> Type
-Tensor' shape = Tensor $ (\n => # (Vect n)) <$> shape
+Tensor : (shape : Vect n Nat) -> Type -> Type
+Tensor shape = Tensor $ (\n => # (Vect n)) <$> shape
 
 public export
 GenArray : (shape : Vect rank ApplF) -> (dtype : Type) -> Type
